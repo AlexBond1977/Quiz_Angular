@@ -6,6 +6,7 @@ import {Observable, Subject, tap} from "rxjs";
 import {UserInfoType} from "../../../types/user-info";
 import {LogoutResponseType} from "../../../types/logout-response.type";
 import {SignupResponseType} from "../../../types/signup-response.type";
+import {RefreshResponseType} from "../../../types/refresh-response.type";
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,12 @@ export class AuthService {
     });
   }
 
+  // создаем метод запроса на получение refresh токенов
+  refresh(): Observable<RefreshResponseType> {
+    const refreshToken: string | null = localStorage.getItem(this.refreshTokenKey);
+    return this.http.post<RefreshResponseType>(environment.apiHost + 'refresh', {refreshToken})
+  }
+
   // создаем метод для осуществления запроса на сервер по адресу хостинга и получения данных
   // от сервера с утверждение возвращения типа LoginResponseType
   login(email: string, password: string): Observable<LoginResponseType> {
@@ -47,7 +54,7 @@ export class AuthService {
       // перед их отправкой в Subscribe компонентов регистрации и авторизации, откуда он выносится
       .pipe(
         tap((data: LoginResponseType) => {
-          if(data.fullName && data.userId && data.accessToken && data.refreshToken) {
+          if (data.fullName && data.userId && data.accessToken && data.refreshToken) {
             this.setUserInfo({
               fullName: data.fullName,
               userId: data.userId
@@ -96,6 +103,14 @@ export class AuthService {
   // добавляем функцию для удаления ключей при разлогинивании
   public removeUserInfo(): void {
     localStorage.removeItem(this.userInfoKey);
+  }
+
+  // добавляем функцию для получения токенов - использунтся в auth.interceptor.ts
+  public getTokens(): { accessToken: string | null, refreshToken: string | null } {
+    return {
+      accessToken: localStorage.getItem(this.accessTokenKey),
+      refreshToken: localStorage.getItem(this.refreshTokenKey)
+    }
   }
 
   public getUserInfo(): UserInfoType | null {
