@@ -18,6 +18,9 @@ import {ReactiveFormsModule} from "@angular/forms";
     RouterModule,
     ReactiveFormsModule,
     UserRoutingModule
+  ],
+  providers: [
+
   ]
 })
 export class UserModule { }

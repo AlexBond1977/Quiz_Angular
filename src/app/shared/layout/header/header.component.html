@@ -3,12 +3,15 @@
     <a routerLink="/" class="logo">
       <img src="/assets/images/logo.png" alt="Логотип">
     </a>
-    <div class="profile" id="profile">
+
+    <div class="profile" id="profile" *ngIf="userInfo && userInfo.fullName">
       <img alt="Профиль" class="profile-image" src="/assets/images/profile.png">
       <div class="profile-info">
-        <div class="profile-user" id="profile-full-name">Роман Чернов</div>
-        <a class="profile-logout" routerLink="/logout">Выйти</a>
+<!--        <div class="profile-user" id="profile-full-name">Роман Чернов</div>-->
+        <div class="profile-user" id="profile-full-name">{{ userInfo.fullName }}</div>
+        <a class="profile-logout" (click)="logout()">Выйти</a>
       </div>
     </div>
+
   </div>
 </header>
