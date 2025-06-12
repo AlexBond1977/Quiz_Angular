@@ -1,16 +1,21 @@
 export type QuizType = {
-    id: number,
-    name: string,
-    questions: Array<QuizQuestionType>,
+  id: number,
+  name: string,
+  questions: Array<QuizQuestionType>,
 }
 
 export type QuizQuestionType = {
-    id: number,
-    question: string,
-    answers: Array<QuizUnswerType>
+  id: number,
+  question: string,
+  answers: Array<QuizAnswerType>
 }
 
-export type QuizUnswerType = {
-    id: number,
-    answer: string
+export type QuizAnswerType = {
+  id: number,
+  answer: string,
+  correct?: boolean
+}
+
+export type QuizTestType = {
+  test: QuizType
 }

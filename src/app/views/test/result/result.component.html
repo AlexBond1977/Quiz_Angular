@@ -9,9 +9,10 @@
     <div class="result-score" id="result-score">
       {{ result }}
     </div>
-    <div class="view">
-      <a href="#/answers" id="answers-link">Посмотреть правильные ответы <img src="/assets/images/small-arrow.png"
-                                                                              alt="Стрелочка"></a>
+    <div class="view link">
+      <a [routerLink]="'/answers'" [queryParams]="{id: testId}" id="answers-link">Посмотреть правильные ответы
+        <img src="/assets/images/small-arrow.png" alt="Стрелочка">
+      </a>
     </div>
   </div>
 </section>

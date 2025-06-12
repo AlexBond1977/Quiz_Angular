@@ -6,6 +6,7 @@ import {QuizType} from "../../../../types/quiz.type";
 import {ActionTestType} from "../../../../types/action-test.type";
 import {UserResultType} from "../../../../types/user-result.type";
 import {AuthService} from "../../../core/auth/auth.service";
+import {PassTestResponseType} from "../../../../types/pass-test-response.type";
 
 @Component({
   selector: 'app-test',
@@ -13,14 +14,13 @@ import {AuthService} from "../../../core/auth/auth.service";
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
-
-  quiz!: QuizType;
-  timerSeconds = 59;
+  public quiz!: QuizType;
+  public timerSeconds = 59;
   private interval: number = 0;
-  currentQuestionIndex: number = 1;
-  chosenAnswerId: number | null = null;
+  public currentQuestionIndex: number = 1;
+  public chosenAnswerId: number | null = null;
   readonly userResult: UserResultType[] = [];
-  actionTestType = ActionTestType;
+  public actionTestType = ActionTestType;
 
   constructor(private activatedRoute: ActivatedRoute,
               private testService: TestService,
@@ -36,6 +36,7 @@ export class TestComponent implements OnInit {
             if ((result as DefaultResponseType).error !== undefined) {
               throw new Error((result as DefaultResponseType).message);
             }
+
             this.quiz = result as QuizType;
             this.startQuiz();
           })
@@ -47,7 +48,7 @@ export class TestComponent implements OnInit {
     return this.quiz.questions[this.currentQuestionIndex - 1]
   }
 
-  startQuiz(): void {
+  private startQuiz(): void {
     this.interval = window.setInterval(() => {
       this.timerSeconds--;
       if (this.timerSeconds === 0) {
@@ -61,7 +62,7 @@ export class TestComponent implements OnInit {
     const userInfo = this.authService.getUserInfo();
     if (userInfo) {
       this.testService.passQuiz(this.quiz.id, userInfo.userId, this.userResult)
-      .subscribe(result => {
+      .subscribe((result: DefaultResponseType | PassTestResponseType) => {
         if (result) {
           if ((result as DefaultResponseType).error !== undefined) {
             throw new Error((result as DefaultResponseType).message);
@@ -70,11 +71,9 @@ export class TestComponent implements OnInit {
         }
       })
     }
-
   }
 
   protected move(action: ActionTestType): void {
-
     const existingResult: UserResultType | undefined = this.userResult.find(item => {
       return item.questionId === this.activeQuestion.id;
     });
@@ -108,8 +107,5 @@ export class TestComponent implements OnInit {
     if (currentResult) {
       this.chosenAnswerId = currentResult.chosenAnswerId;
     }
-
   }
-
-
 }

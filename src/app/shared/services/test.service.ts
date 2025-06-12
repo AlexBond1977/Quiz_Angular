@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {QuizListType} from "../../../types/quiz-list.type";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {TestResultType} from "../../../types/test-result.type";
-import {QuizType} from "../../../types/quiz.type";
+import {QuizTestType, QuizType} from "../../../types/quiz.type";
 import {UserResultType} from "../../../types/user-result.type";
 import {PassTestResponseType} from "../../../types/pass-test-response.type";
 
@@ -41,10 +41,14 @@ export class TestService {
       });
   }
 
-
   // сервис для получения результата теста
   getResult(id: number | string, userId: number | string): Observable<DefaultResponseType | PassTestResponseType> {
     return this.http.get<DefaultResponseType | PassTestResponseType>(environment.apiHost + 'tests/' + id + '/result?userId=' + userId);
+  }
+
+  // сервис для получения расширенных результатов теста
+  getResultDetails(id: number | string, userId: number | string): Observable<DefaultResponseType | QuizTestType> {
+    return this.http.get<DefaultResponseType | QuizTestType>(environment.apiHost + 'tests/' + id + '/result/details?userId=' + userId);
   }
 
 

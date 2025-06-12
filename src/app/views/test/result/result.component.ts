@@ -11,8 +11,8 @@ import {PassTestResponseType} from "../../../../types/pass-test-response.type";
   styleUrls: ['./result.component.scss']
 })
 export class ResultComponent implements OnInit {
-
   result: string = '';
+  public testId: number | string = '';
 
   constructor(private testService: TestService,
               private activatedRoute: ActivatedRoute,
@@ -22,23 +22,19 @@ export class ResultComponent implements OnInit {
   ngOnInit(): void {
     const userInfo = this.authService.getUserInfo();
     if (userInfo) {
-      this.activatedRoute.queryParams.subscribe(params => {
-        if (params['id']) {
-          this.testService.getResult(params['id'], userInfo.userId)
+      this.activatedRoute.queryParams.subscribe(param => {
+        if (param['id']) {
+          this.testService.getResult(param['id'], userInfo.userId)
             .subscribe(result => {
               if (result) {
                 if ((result as DefaultResponseType).error !== undefined) {
                   throw new Error((result as DefaultResponseType).message);
                 }
-
-                this.result = (result as PassTestResponseType).score + '/' +
-                  (result as PassTestResponseType).total;
-
+                this.result = (result as PassTestResponseType).score + '/' + (result as PassTestResponseType).total;
               }
             })
         }
       });
     }
   }
-
 }
