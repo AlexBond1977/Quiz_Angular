@@ -6,6 +6,10 @@
     flex-direction: column;
     gap: 60px;
 
+    img {
+      margin-left: 13px;
+    }
+
     .pre-title {
       display: flex;
       align-items: center;
@@ -35,7 +39,7 @@
       .answers-option {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 5px;
 
         .answer-title {
           margin-bottom: 20px;

@@ -23,6 +23,7 @@ export class ResultComponent implements OnInit {
     const userInfo = this.authService.getUserInfo();
     if (userInfo) {
       this.activatedRoute.queryParams.subscribe(param => {
+        this.testId = param['id'];
         if (param['id']) {
           this.testService.getResult(param['id'], userInfo.userId)
             .subscribe(result => {

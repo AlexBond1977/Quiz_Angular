@@ -8,7 +8,7 @@
     </p>
     <div class="answers-title">
       <h1 class="big-title"><span>Правильные ответы</span> к тесту</h1>
-      <p class="username">Тест выполнил <span>{{ userInfo?.fullName }}, {{ userInfo?.email }}</span></p>
+      <p class="username">Тест выполнил <span>{{ userInfo?.fullName }}</span>, <span>{{ userInfo?.email }}</span></p>
     </div>
     <div class="answers-options" id="answers-options">
       <div class="answers-option" *ngFor="let question of quiz.questions; let i = index">
@@ -20,7 +20,7 @@
     </div>
     <div class="back-to-results link">
       <a id="to-result" [routerLink]="'/result'" [queryParams]="{id: testId}">Обратно к моему результату теста
-        <img src="/assets/images/small-arrow.png" alt="">
+        <img src="/assets/images/small-arrow.png" alt="Стрелочка">
       </a>
     </div>
   </div>
