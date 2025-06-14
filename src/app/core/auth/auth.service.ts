@@ -57,7 +57,8 @@ export class AuthService {
           if (data.fullName && data.userId && data.accessToken && data.refreshToken) {
             this.setUserInfo({
               fullName: data.fullName,
-              userId: data.userId
+              userId: data.userId,
+              email: email
             })
             this.setTokens(data.accessToken, data.refreshToken);
           }
